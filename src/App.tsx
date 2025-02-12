@@ -1,7 +1,15 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./App.css";
+import { HeroList } from "./HeroList";
+
+const queryClient = new QueryClient();
 
 function App() {
-  return <div></div>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HeroList />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
