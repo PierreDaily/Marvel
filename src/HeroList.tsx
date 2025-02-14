@@ -42,9 +42,14 @@ export function HeroList() {
           prev
         </button>
 
-        <ul>
+        <ul className="grid grid-cols-4 grid-rows-4 gap-4">
           {query.data?.data.map((comic) => (
-            <li key={comic.id}>{comic.name}</li>
+            <li key={comic.id} className="block w-full col-span-1 row-span-1">
+              <img
+                className="w-48 h-48 object-cover rounded-2xl"
+                src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+              />
+            </li>
           ))}
         </ul>
       </>

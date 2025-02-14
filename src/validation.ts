@@ -5,6 +5,10 @@ export const HeroesSchema = z.object({
     z.object({
       id: z.number(),
       name: z.string().nonempty(),
+      thumbnail: z.object({
+        path: z.string(),
+        extension: z.string(),
+      }),
     })
   ),
   limit: z.number().int().positive(),

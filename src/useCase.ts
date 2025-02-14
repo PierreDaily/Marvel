@@ -1,5 +1,4 @@
 import { getHeroes } from "./model";
-import { HeroesSchema } from "./validation";
 
 export async function getHerosUseCase({
   limit,
@@ -9,6 +8,5 @@ export async function getHerosUseCase({
   offset: number;
 }) {
   const data = await getHeroes({ offset, limit });
-  const heroes = HeroesSchema.parse(data);
-  return heroes;
+  return data;
 }
