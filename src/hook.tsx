@@ -2,8 +2,14 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getHerosUseCase } from "./useCase";
 import { useState } from "react";
 
-export function usePagination({ limit }: { limit: number }) {
-  const [offset, setOffset] = useState(0);
+export function usePagination({
+  page = 1,
+  limit,
+}: {
+  page?: number;
+  limit: number;
+}) {
+  const [offset, setOffset] = useState((page - 1) * limit);
   const query = useQuery({
     placeholderData: keepPreviousData,
     queryKey: ["heroes", { offset, limit }],
@@ -22,8 +28,8 @@ export function usePagination({ limit }: { limit: number }) {
     return {
       activePage,
       data: query.data?.data,
-      hasNext: activePage === totalPageCount,
-      hasPrev: activePage === 1,
+      hasNext: activePage !== totalPageCount,
+      hasPrev: activePage !== 1,
       next: () => {
         setOffset(offset + limit);
       },
@@ -33,7 +39,10 @@ export function usePagination({ limit }: { limit: number }) {
       totalPageCount,
       isSuccess: query.isSuccess,
       isLoading: query.isLoading,
+      setPage: (page: number) => {
+        setOffset((page - 1) * limit);
+      },
     };
   }
-  return { isLoading: false, isSuccess: false, data: [] };
+  return { isLoading: query.isLoading, isSuccess: query.isSuccess, data: [] };
 }
