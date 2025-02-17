@@ -10,29 +10,31 @@ export function HeroList() {
       <>
         <h1>total pages: {pagination.totalPageCount}</h1>
         <h1>active page: {pagination.activePage}</h1>
-        <button
-          className="disabled:bg-gray-500 flex justify-center items-center text-white w-16 h-16 rounded-xl bg-black"
-          disabled={!pagination.hasPrev}
-          onClick={pagination.prev}
-        >
-          prev
-        </button>
-        {pagination.hasNext &&
-          pagination.activePage !== pagination.totalPageCount && (
-            <button
-              onClick={() => pagination.setPage(pagination.activePage + 1)}
-              className="disabled:bg-gray-500 flex justify-center items-center text-white w-16 h-16 rounded-xl bg-black"
-            >
-              {pagination.activePage + 1}
-            </button>
-          )}
-        <button
-          className="disabled:bg-gray-500 flex justify-center items-center text-white w-16 h-16 rounded-xl bg-black"
-          disabled={!pagination.hasNext}
-          onClick={pagination.next}
-        >
-          Next
-        </button>
+        <div className="flex justify-center gap-6 p-4">
+          <button
+            className="disabled:bg-gray-500 flex justify-center items-center text-white w-16 h-16  bg-red-500 font-noto -skew-x-12 font-bold"
+            disabled={!pagination.hasPrev}
+            onClick={pagination.prev}
+          >
+            prev
+          </button>
+          {pagination.hasNext &&
+            pagination.activePage !== pagination.totalPageCount && (
+              <button
+                onClick={() => pagination.setPage(pagination.activePage + 1)}
+                className="disabled:bg-gray-500 flex justify-center items-center text-white w-16 h-16  bg-red-500 font-noto -skew-x-12 font-bold"
+              >
+                {pagination.activePage + 1}
+              </button>
+            )}
+          <button
+            className="disabled:bg-gray-500 flex justify-center items-center text-white w-16 h-16  bg-red-500 font-noto -skew-x-12 font-bold"
+            disabled={!pagination.hasNext}
+            onClick={pagination.next}
+          >
+            Next
+          </button>
+        </div>
 
         <ul className="grid grid-cols-4 grid-rows-4 gap-4">
           {pagination.data.map((comic) => (
