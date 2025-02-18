@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { Button } from "./Button";
 import { usePagination } from "./hook";
 
@@ -15,8 +16,44 @@ export function HeroList() {
       isPlaceholderData,
       next,
       prev,
+      setPage,
       totalPageCount,
     } = pagination;
+
+    const before: Array<ReactElement> = [];
+    const after: Array<ReactElement> = [];
+
+    if (activePage > 1) {
+      for (let i = activePage - 1; i !== 0 && activePage - i < 3; i -= 1) {
+        before.push(
+          <Button
+            onClick={() => setPage(i)}
+            key={i}
+            className="hidden sm:block"
+          >
+            {i}
+          </Button>
+        );
+      }
+    }
+    if (activePage < totalPageCount) {
+      for (
+        let i = activePage + 1;
+        i !== totalPageCount && i - activePage < 3;
+        i += 1
+      ) {
+        after.push(
+          <Button
+            onClick={() => setPage(i)}
+            key={i}
+            className="hidden sm:block"
+          >
+            {i}
+          </Button>
+        );
+      }
+    }
+
     return (
       <>
         <header className=" flex justify-center bg-red-600 h-32 items-center">
@@ -43,9 +80,11 @@ export function HeroList() {
           <Button disabled={!hasPrev} onClick={prev}>
             Prev
           </Button>
-          {hasNext && activePage !== totalPageCount && (
-            <Button>{activePage}</Button>
-          )}
+          {before}
+
+          <Button active>{activePage}</Button>
+
+          {after}
           <Button disabled={!hasNext} onClick={next}>
             Next
           </Button>
