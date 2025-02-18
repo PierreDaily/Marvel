@@ -40,7 +40,7 @@ export async function getHeroes({
   count: number;
 }> {
   return fetch(
-    addAuthParams("http://gateway.marvel.com/v1/public/characters", {
+    addAuthParams("https://gateway.marvel.com/v1/public/characters", {
       offset,
       limit,
     })
