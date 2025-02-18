@@ -6,7 +6,17 @@ export function HeroList() {
 
   if (pagination.isLoading) return <div>Loading....</div>;
 
-  if (pagination.isSuccess)
+  if (pagination.isSuccess) {
+    const {
+      activePage,
+      data,
+      hasNext,
+      hasPrev,
+      isPlaceholderData,
+      next,
+      prev,
+      totalPageCount,
+    } = pagination;
     return (
       <>
         <header className=" flex justify-center bg-red-600 h-32 items-center">
@@ -30,27 +40,22 @@ export function HeroList() {
         </header>
 
         <div className="flex justify-center gap-6 p-4">
-          <Button disabled={!pagination.hasPrev} onClick={pagination.prev}>
+          <Button disabled={!hasPrev} onClick={prev}>
             Prev
           </Button>
-          {pagination.hasNext &&
-            pagination.activePage !== pagination.totalPageCount && (
-              <Button
-                onClick={() => pagination.setPage(pagination.activePage + 1)}
-              >
-                {pagination.activePage + 1}
-              </Button>
-            )}
-          <Button disabled={!pagination.hasNext} onClick={pagination.next}>
+          {hasNext && activePage !== totalPageCount && (
+            <Button>{activePage}</Button>
+          )}
+          <Button disabled={!hasNext} onClick={next}>
             Next
           </Button>
         </div>
 
         <ul className="grid grid-cols-4 grid-flow-row gap-4 relative px-4 md:px-6 xl:max-w-[1280px] mx-auto">
-          {pagination.isPlaceholderData && (
+          {isPlaceholderData && (
             <div className="top-0 left-0 absolute w-full h-full bg-black opacity-50 z-20"></div>
           )}
-          {pagination.data.map((heroe) => (
+          {data.map((heroe) => (
             <li
               key={heroe.id}
               className=" col-span-2 row-span-2 flex justify-center md:col-span-1 md:row-span-1 aspect-square"
@@ -73,6 +78,7 @@ export function HeroList() {
         </ul>
       </>
     );
+  }
 
   return <div>Impossible to load characters</div>;
 }

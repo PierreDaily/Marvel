@@ -37,11 +37,12 @@ export function usePagination({
         setOffset(offset - limit);
       },
       totalPageCount,
-      isSuccess: query.isSuccess,
       isLoading: query.isLoading,
       setPage: (page: number) => {
         setOffset((page - 1) * limit);
       },
+      isPlaceholderData: query.isPlaceholderData,
+      isSuccess: query.isSuccess,
     };
   }
   return { isLoading: query.isLoading, isSuccess: query.isSuccess, data: [] };
