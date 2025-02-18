@@ -1,6 +1,23 @@
 import CryptoJS from "crypto-js";
 import { HeroesSchema } from "./validation";
 
+type HeroesRawData = {
+  data: {
+    count: number;
+    limit: number;
+    offset: number;
+    results: {
+      id: number;
+      name: string;
+      thumbnail: {
+        extension: string;
+        path: string;
+      };
+    }[];
+    total: number;
+  };
+};
+
 function addAuthParams(
   url: string,
   { limit, offset }: { limit?: number; offset?: number }
@@ -28,17 +45,7 @@ export async function getHeroes({
 }: {
   limit: number;
   offset: number;
-}): Promise<{
-  data: {
-    id: number;
-    name: string;
-    thumbnail: { path: string; extension: string };
-  }[];
-  offset: number;
-  limit: number;
-  total: number;
-  count: number;
-}> {
+}): Promise<HeroesRawData> {
   return fetch(
     addAuthParams("https://gateway.marvel.com/v1/public/characters", {
       offset,
@@ -47,9 +54,7 @@ export async function getHeroes({
   )
     .then((res) => res.json())
     .then((data) => {
-      const { results, limit, offset, count, total } = data.data;
-      const temp = { data: results, limit, offset, count, total };
-      const heroes = HeroesSchema.parse(temp);
-      return heroes;
+      const validData = HeroesSchema.parse(data);
+      return validData;
     });
 }

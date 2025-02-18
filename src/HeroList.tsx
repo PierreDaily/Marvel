@@ -20,12 +20,12 @@ export function HeroList() {
       totalPageCount,
     } = pagination;
 
-    const before: Array<ReactElement> = [];
-    const after: Array<ReactElement> = [];
+    const navBeforeActivePage: Array<ReactElement> = [];
+    const navAfterActivePage: Array<ReactElement> = [];
 
     if (activePage > 1) {
       for (let i = activePage - 1; i !== 0 && activePage - i < 3; i -= 1) {
-        before.push(
+        navBeforeActivePage.push(
           <Button
             onClick={() => setPage(i)}
             key={i}
@@ -42,7 +42,7 @@ export function HeroList() {
         i !== totalPageCount && i - activePage < 3;
         i += 1
       ) {
-        after.push(
+        navAfterActivePage.push(
           <Button
             onClick={() => setPage(i)}
             key={i}
@@ -80,11 +80,11 @@ export function HeroList() {
           <Button disabled={!hasPrev} onClick={prev}>
             Prev
           </Button>
-          {before}
+          {navBeforeActivePage}
 
           <Button active>{activePage}</Button>
 
-          {after}
+          {navAfterActivePage}
           <Button disabled={!hasNext} onClick={next}>
             Next
           </Button>
