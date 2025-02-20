@@ -18,6 +18,10 @@ type HeroesRawData = {
   };
 };
 
+/**
+ * Generate and append required auth query params
+ */
+
 function addAuthParams(
   url: string,
   { limit, offset }: { limit?: number; offset?: number }

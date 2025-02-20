@@ -1,5 +1,5 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { getHerosUseCase } from "./useCase";
+import { getHerosUseCase } from "../../useCase";
 import { useState } from "react";
 
 export function usePagination({

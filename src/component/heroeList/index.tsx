@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Button } from "./Button";
+import { Button } from "../button";
 import { usePagination } from "./hook";
 
 export function HeroList() {
