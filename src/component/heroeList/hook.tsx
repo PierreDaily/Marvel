@@ -1,6 +1,10 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { getHerosUseCase } from "../../useCase";
+import { buildGetHerosUseCase } from "../../heroeContext/usecase/list";
 import { useState } from "react";
+import { httpHeroRepository } from "../../heroeContext/infrastructure/gateways/http-list-hero";
+
+const heroRepository = new httpHeroRepository();
+const getHerosUseCaseB = buildGetHerosUseCase(heroRepository);
 
 export function usePagination({
   page = 1,
@@ -13,7 +17,7 @@ export function usePagination({
   const query = useQuery({
     placeholderData: keepPreviousData,
     queryKey: ["heroes", { offset, limit }],
-    queryFn: () => getHerosUseCase({ offset, limit }),
+    queryFn: () => getHerosUseCaseB({ offset, limit }),
   });
 
   if (query.isLoading)
